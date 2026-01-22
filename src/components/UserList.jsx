@@ -4,13 +4,14 @@ import "./UserList.css";
 
 function UserList() {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
+    
+      
+      fetch("http://localhost:5005/api/users") .then((response) => {
         if (!response.ok) {
           throw new Error("Error al cargar los usuarios");
         }
@@ -26,17 +27,14 @@ function UserList() {
       });
   }, []);
 
+  
+  // Filtro la lista completa 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (loading) {
-    return <p className="status">Cargando...</p>;
-  }
-
-  if (error) {
-    return <p className="status error">{error}</p>;
-  }
+  if (loading) return <p className="status">Cargando...</p>;
+  if (error) return <p className="status error">{error}</p>;
 
   return (
     <div className="container">
